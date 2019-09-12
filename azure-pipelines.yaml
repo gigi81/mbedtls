@@ -64,5 +64,10 @@ jobs:
 
   - task: PublishBuildArtifacts@1
     inputs:
+      pathtoPublish: 'crypto\library\Release'
+      artifactName: win-x64
+
+  - task: PublishBuildArtifacts@1
+    inputs:
       pathtoPublish: 'library\Release'
       artifactName: win-x64

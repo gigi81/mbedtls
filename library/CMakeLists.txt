@@ -182,6 +182,9 @@ if(USE_SHARED_MBEDTLS_LIBRARY)
 
     add_library(mbedtls SHARED ${src_tls})
     set_target_properties(mbedtls PROPERTIES VERSION 2.19.0 SOVERSION 13)
+    if(MSVC OR CMAKE_C_COMPILER_ID STREQUAL "Intel")
+        set_target_properties(mbedtls PROPERTIES LINK_FLAGS /DEF:"${MBEDTLS_DIR}/mbedTLS.def")
+    endif()
     target_link_libraries(mbedtls ${libs} mbedx509)
     target_include_directories(mbedtls
         PUBLIC ${MBEDTLS_DIR}/include/

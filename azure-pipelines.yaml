@@ -1,0 +1,67 @@
+variables:
+  packageVersion: $(Build.BuildNumber)
+
+resources:
+- repo: self
+  clean: true
+
+jobs:
+
+# ------- Windows x64 ---------------------------------------------------------
+- job: windows_x64
+  condition: succeeded()
+  pool:
+    name: Hosted VS2017
+    demands:
+    - msbuild
+    - visualstudio
+
+  steps:
+  - checkout: self
+    clean: true
+    submodules: true
+
+  - task: PowerShell@2
+    displayName: 'Set build number'
+    inputs:
+      targetType: inline
+      workingDirectory: include/mbedtls
+      script: |
+       $v = @{}
+       $path = Join-Path (Get-Location) 'version.h'
+       foreach($line in Get-Content -Path $path)
+       {
+           $m = [regex]::Match($line, '#define[\t\s]+([1-9a-zA-Z_]+)[\t\s]+(.*)')
+           if($m.Success)
+           {
+               $v.Add($m.Groups[1].Value, $m.Groups[2].Value.Trim())
+           }
+       }
+       $version = "$($v['MBEDTLS_VERSION_MAJOR']).$($v['MBEDTLS_VERSION_MINOR']).$($v['MBEDTLS_VERSION_PATCH']).$($Env:BUILD_BUILDID)"
+       Write-Host "##vso[build.updatebuildnumber]$version"
+       Write-Host "##vso[task.setvariable variable=packageVersion]$version"
+
+  - task: CMake@1
+    displayName: 'Cmake x64'
+    inputs:
+      cmakeArgs: '. -DENABLE_TESTING=ON -DUSE_SHARED_MBEDTLS_LIBRARY=ON -G "Visual Studio 15 2017" -A x64'
+      
+  - task: VSBuild@1
+    displayName: 'Build solution mbedtls.sln x64'
+    inputs:
+      solution: mbedtls.sln
+      vsVersion: 15.0
+      platform: x64
+      configuration: release
+      clean: true
+      msbuildArgs: /m
+
+  - task: CmdLine@2
+    displayName: 'Run tests x64'
+    inputs:
+      script: 'release\test.exe'
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathtoPublish: 'release\mbedtls.dll'
+      artifactName: win-x64

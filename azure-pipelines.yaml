@@ -45,11 +45,12 @@ jobs:
     displayName: 'Cmake x64'
     inputs:
       cmakeArgs: '. -DENABLE_TESTING=ON -DUSE_SHARED_MBEDTLS_LIBRARY=ON -G "Visual Studio 15 2017" -A x64'
+      workingDirectory: .
       
   - task: VSBuild@1
     displayName: 'Build solution mbedtls.sln x64'
     inputs:
-      solution: mbedtls.sln
+      solution: 'mbed TLS.sln'
       vsVersion: 15.0
       platform: x64
       configuration: release

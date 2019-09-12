@@ -44,7 +44,7 @@ jobs:
   - task: CMake@1
     displayName: 'Cmake x64'
     inputs:
-      cmakeArgs: '. -DENABLE_TESTING=ON -DUSE_SHARED_MBEDTLS_LIBRARY=ON -G "Visual Studio 15 2017" -A x64'
+      cmakeArgs: '. -DENABLE_TESTING=OFF -DUSE_SHARED_MBEDTLS_LIBRARY=ON -G "Visual Studio 15 2017" -A x64'
       workingDirectory: .
       
   - task: VSBuild@1
@@ -60,9 +60,9 @@ jobs:
   - task: CmdLine@2
     displayName: 'Run tests x64'
     inputs:
-      script: 'release\test.exe'
+      script: 'programs\test\Release\selftest.exe'
 
   - task: PublishBuildArtifacts@1
     inputs:
-      pathtoPublish: 'release\mbedtls.dll'
+      pathtoPublish: 'library\Release'
       artifactName: win-x64

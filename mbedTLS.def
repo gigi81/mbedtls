@@ -351,7 +351,6 @@ mbedtls_base64_encode
 mbedtls_base64_decode
 mbedtls_base64_self_test
 
-mbedtls_platform_win32_snprintf
 mbedtls_snprintf
 mbedtls_platform_set_snprintf
 mbedtls_platform_setup

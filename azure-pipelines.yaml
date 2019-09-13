@@ -88,11 +88,13 @@ jobs:
       cmakeArgs: '. -DENABLE_TESTING=ON -DUSE_SHARED_MBEDTLS_LIBRARY=ON -DCMAKE_BUILD_TYPE=Release'
       workingDirectory: .
 
-  - task: CMake@1
-    displayName: 'Compile'
+  - task: Bash@3
     inputs:
-      cmakeArgs: '--build . --config Release'
-      workingDirectory: .
+      script: make && ls
+
+  - task: Bash@3
+    inputs:
+      script: make test
       
   - task: PublishBuildArtifacts@1
     inputs:

@@ -71,3 +71,35 @@ jobs:
     inputs:
       pathtoPublish: 'library\Release'
       artifactName: win-x64
+
+# ------- Linux -------------------------------------------------------------
+- job: linux_x64
+  condition: succeeded()
+  pool:
+    name: Hosted Ubuntu 1604
+  steps:
+  - checkout: self
+    clean: true
+    submodules: true
+    
+  - task: CMake@1
+    displayName: 'Generate project'
+    inputs:
+      cmakeArgs: '. -DENABLE_TESTING=ON -DUSE_SHARED_MBEDTLS_LIBRARY=ON -DCMAKE_BUILD_TYPE=Release'
+      workingDirectory: .
+
+  - task: CMake@1
+    displayName: 'Compile'
+    inputs:
+      cmakeArgs: '--build . --config Release'
+      workingDirectory: .
+      
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathtoPublish: 'crypto\library\Release'
+      artifactName: linux-x64
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathtoPublish: 'library\Release'
+      artifactName: linux-x64

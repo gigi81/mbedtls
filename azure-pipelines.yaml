@@ -44,7 +44,7 @@ jobs:
   - task: CMake@1
     displayName: 'Cmake x64'
     inputs:
-      cmakeArgs: '. -G "Visual Studio 15 2017" -A x64 -DENABLE_TESTING=OFF -DUSE_SHARED_MBEDTLS_LIBRARY=ON -DCMAKE_RUNTIME_OUTPUT_DIRECTORY=$(Build.ArtifactStagingDirectory)'
+      cmakeArgs: '. -G "Visual Studio 15 2017" -A x64 -DENABLE_TESTING=OFF -DUSE_SHARED_MBEDTLS_LIBRARY=ON'
       workingDirectory: .
       
   - task: VSBuild@1
@@ -64,6 +64,12 @@ jobs:
 
   - task: PublishBuildArtifacts@1
     inputs:
+      pathtoPublish: 'crypto\library\Release'
+      artifactName: win-x64
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathtoPublish: 'library\Release'
       artifactName: win-x64
 
 # ------- Linux -------------------------------------------------------------
@@ -111,7 +117,7 @@ jobs:
   - task: CMake@1
     displayName: 'Generate project'
     inputs:
-      cmakeArgs: '. -G Xcode -DENABLE_TESTING=ON -DUSE_SHARED_MBEDTLS_LIBRARY=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_RUNTIME_OUTPUT_DIRECTORY=$(Build.ArtifactStagingDirectory)'
+      cmakeArgs: '. -G Xcode -DENABLE_TESTING=ON -DUSE_SHARED_MBEDTLS_LIBRARY=ON -DCMAKE_BUILD_TYPE=Release'
       workingDirectory: .
 
   - task: CMake@1
@@ -128,4 +134,11 @@ jobs:
       
   - task: PublishBuildArtifacts@1
     inputs:
+      pathtoPublish: 'crypto/library/Release'
       artifactName: osx
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathtoPublish: 'library/Release'
+      artifactName: osx
+

@@ -44,11 +44,11 @@ jobs:
   - task: CMake@1
     displayName: 'Cmake x64'
     inputs:
-      cmakeArgs: '. -DENABLE_TESTING=OFF -DUSE_SHARED_MBEDTLS_LIBRARY=ON -G "Visual Studio 15 2017" -A x64 -DCMAKE_LIBRARY_OUTPUT_DIRECTORY=$(Build.ArtifactStagingDirectory)'
+      cmakeArgs: '. -DENABLE_TESTING=OFF -DUSE_SHARED_MBEDTLS_LIBRARY=ON -G "Visual Studio 15 2017" -A x64 -DCMAKE_RUNTIME_OUTPUT_DIRECTORY=$(Build.ArtifactStagingDirectory)'
       workingDirectory: .
       
   - task: VSBuild@1
-    displayName: 'Build solution mbedtls.sln x64'
+    displayName: 'Build solution x64'
     inputs:
       solution: 'mbed TLS.sln'
       vsVersion: 15.0
@@ -83,11 +83,13 @@ jobs:
       workingDirectory: .
 
   - task: Bash@3
+    displayName: 'Build'
     inputs:
       targetType: inline
       script: make
 
   - task: Bash@3
+    displayName: 'Test'
     inputs:
       targetType: inline
       script: make test

@@ -55,7 +55,7 @@ jobs:
       platform: x64
       configuration: release
       clean: true
-      msbuildArgs: /m
+      #msbuildArgs: /m
 
   - task: CmdLine@2
     displayName: 'Run tests x64'
@@ -111,14 +111,14 @@ jobs:
   - task: CMake@1
     displayName: 'Generate project'
     inputs:
-      cmakeArgs: '. -G Xcode -DENABLE_TESTING=ON -DUSE_SHARED_MBEDTLS_LIBRARY=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_LIBRARY_OUTPUT_DIRECTORY=$(Build.ArtifactStagingDirectory)'
+      cmakeArgs: '. -G Xcode -DENABLE_TESTING=ON -DUSE_SHARED_MBEDTLS_LIBRARY=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_RUNTIME_OUTPUT_DIRECTORY=$(Build.ArtifactStagingDirectory)'
       workingDirectory: .
 
-  - task: Bash@3
-    displayName: 'Build'
+  - task: CMake@1
+    displayName: 'Compile'
     inputs:
-      targetType: inline
-      script: make
+      cmakeArgs: '--build . --config Release'
+      workingDirectory: library
 
   - task: Bash@3
     displayName: 'Test'

@@ -176,6 +176,7 @@ if(USE_SHARED_MBEDTLS_LIBRARY)
     add_library(mbedx509 SHARED ${src_x509})
     set_target_properties(mbedx509 PROPERTIES VERSION 2.19.0 SOVERSION 1)
     target_link_libraries(mbedx509 ${libs} mbedcrypto)
+    add_dependencies(mbedx509 mbedcrypto)
     target_include_directories(mbedx509
         PUBLIC ${MBEDTLS_DIR}/include/
         PUBLIC ${MBEDTLS_DIR}/crypto/include/)
@@ -186,6 +187,7 @@ if(USE_SHARED_MBEDTLS_LIBRARY)
         set_target_properties(mbedtls PROPERTIES LINK_FLAGS /DEF:"${MBEDTLS_DIR}/mbedTLS.def")
     endif()
     target_link_libraries(mbedtls ${libs} mbedx509)
+    add_dependencies(mbedtls mbedx509)
     target_include_directories(mbedtls
         PUBLIC ${MBEDTLS_DIR}/include/
         PUBLIC ${MBEDTLS_DIR}/crypto/include/)

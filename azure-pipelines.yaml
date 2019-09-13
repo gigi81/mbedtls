@@ -118,7 +118,7 @@ jobs:
     displayName: 'Compile'
     inputs:
       cmakeArgs: '--build . --config Release'
-      workingDirectory: library
+      workingDirectory: .
 
   - task: Bash@3
     displayName: 'Test'

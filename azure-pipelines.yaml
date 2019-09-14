@@ -187,7 +187,7 @@ jobs:
     displayName: 'NuGet push private feed'
     inputs:
       command: push
-      publishVstsFeed: '/be2f0cee-544d-407b-b4bf-6dcb58c6e898'
+      publishVstsFeed: '/mbedtls'
 
 #  - task: NuGetCommand@2
 #    displayName: 'NuGet push nuget.org feed'

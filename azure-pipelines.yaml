@@ -189,10 +189,10 @@ jobs:
       command: push
       publishVstsFeed: '/be2f0cee-544d-407b-b4bf-6dcb58c6e898'
 
-  - task: NuGetCommand@2
-    displayName: 'NuGet push nuget.org feed'
-    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
-    inputs:
-      command: push
-      nuGetFeedType: external
-      publishFeedCredentials: nuget.org
+#  - task: NuGetCommand@2
+#    displayName: 'NuGet push nuget.org feed'
+#    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+#    inputs:
+#      command: push
+#      nuGetFeedType: external
+#      publishFeedCredentials: nuget.org

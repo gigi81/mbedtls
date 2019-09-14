@@ -142,3 +142,57 @@ jobs:
       pathtoPublish: 'library/Release'
       artifactName: osx
 
+# ------- Package ---------------------------------------------------------
+- job: package
+  dependsOn:
+  - windows_x64
+  - linux_x64
+  - osx
+  condition: succeeded()
+  pool:
+    name: Hosted
+  steps:
+  - checkout: self
+    clean: true
+    submodules: true
+
+  - task: DownloadBuildArtifacts@0
+    displayName: 'Download Build Artifacts'
+    inputs:
+      downloadType: specific
+      downloadPath: runtimes
+
+  - powershell: |
+     Get-ChildItem -Path runtimes -File -Recurse -Filter '*.so.*' | Remove-Item -Force
+     Get-ChildItem -Path runtimes -File -Recurse -Filter '*.a' | Remove-Item -Force
+     Get-ChildItem -Path runtimes -File -Recurse -Filter '*.1*.dylib' | Remove-Item -Force
+     Get-ChildItem -Path runtimes -File -Recurse -Filter '*.2*.dylib' | Remove-Item -Force
+     Get-ChildItem -Path runtimes -File -Recurse -Filter '*.3*.dylib' | Remove-Item -Force
+     Get-ChildItem -Path runtimes -File -Recurse -Filter '*.exp' | Remove-Item -Force
+     Get-ChildItem -Path runtimes -File -Recurse -Filter '*.lib' | Remove-Item -Force
+    
+  - task: NuGetToolInstaller@0
+    inputs:
+      versionSpec: '5.0.2' 
+    
+  - task: NuGetCommand@2
+    displayName: 'NuGet pack'
+    inputs:
+      command: pack
+      packagesToPack: mbedtls.nuspec
+      versioningScheme: byEnvVar
+      versionEnvVar: packageVersion
+      
+  - task: NuGetCommand@2
+    displayName: 'NuGet push private feed'
+    inputs:
+      command: push
+      publishVstsFeed: '/be2f0cee-544d-407b-b4bf-6dcb58c6e898'
+
+  - task: NuGetCommand@2
+    displayName: 'NuGet push nuget.org feed'
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+    inputs:
+      command: push
+      nuGetFeedType: external
+      publishFeedCredentials: nuget.org

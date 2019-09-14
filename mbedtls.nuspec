@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+    <metadata>
+        <id>mbedtls</id>
+        <version>0.0.1-ignored</version>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>mbedtls shared library packge with native runtime for Windows (x64), Linux (x64) and Osx (x64)</description>
+        <authors>Luigi Grilli</authors>
+        <license type="file">LICENSE</license>
+        <releaseNotes></releaseNotes>
+    </metadata>
+    <files>
+        <!-- <file src="runtimes\win-arm\*.*" target="runtimes\win-arm\native" /> -->
+        <!-- <file src="runtimes\win-x86\*.*" target="runtimes\win-x86\native" /> -->
+        <file src="runtimes\win-x64\*.*" target="runtimes\win-x64\native" />
+        <file src="runtimes\linux-x64\*.*" target="runtimes\linux-x64\native" />
+        <!-- <file src="runtimes\linux-arm64\*.*" target="runtimes\linux-arm64\native" /> -->
+        <!-- <file src="runtimes\linux-arm\*.*" target="runtimes\linux-arm\native" /> -->
+        <!-- <file src="runtimes\linux-armel\*.*" target="runtimes\linux-armel\native" /> -->
+        <file src="runtimes\osx\*.*" target="runtimes\osx\native" />
+        <file src="LICENS*" target="" />
+    </files>
+</package>

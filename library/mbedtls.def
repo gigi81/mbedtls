@@ -205,11 +205,3 @@ mbedtls_ssl_ticket_free
 mbedtls_version_get_string
 mbedtls_version_get_string_full
 mbedtls_version_check_feature
-
-; certs.h
-mbedtls_test_cas_pem
-mbedtls_test_cas_pem_len
-mbedtls_test_srv_crt
-mbedtls_test_srv_key
-mbedtls_test_srv_crt_len
-mbedtls_test_srv_key_len

@@ -87,3 +87,11 @@ mbedtls_x509write_csr_free
 mbedtls_x509write_csr_der
 mbedtls_x509write_csr_pem
 
+; certs.h
+mbedtls_test_cas_pem
+mbedtls_test_cas_pem_len
+mbedtls_test_srv_crt
+mbedtls_test_srv_key
+mbedtls_test_srv_crt_len
+mbedtls_test_srv_key_len
+

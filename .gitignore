@@ -53,3 +53,12 @@ massif-*
 /TAGS
 /tags
 .vs
+*.filters
+*.dll
+*.exp
+*.lib
+*.lastbuildstate
+*.tlog
+*.user
+Debug
+Release

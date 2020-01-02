@@ -188,7 +188,7 @@ jobs:
       artifactName: osx
 
 # ------- aarch64-linux-gnu --------------------------------------------------
-  - job: linux_arm64
+- job: linux_arm64
   condition: succeeded()
   pool:
     name: Hosted Ubuntu 1604
@@ -239,6 +239,9 @@ jobs:
   - windows_x86
   - linux_x64
   - osx
+  - linux_arm64
+  - linux_arm
+  - linux_armel
   condition: succeeded()
   pool:
     name: Hosted

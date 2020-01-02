@@ -187,6 +187,51 @@ jobs:
       pathtoPublish: 'library/Release'
       artifactName: osx
 
+# ------- aarch64-linux-gnu --------------------------------------------------
+  - job: linux_arm64
+  condition: succeeded()
+  pool:
+    name: Hosted Ubuntu 1604
+
+  container: gigi81/azurecross:aarch64-linux-gnu
+
+  steps:
+  - template: arm-steps.yml
+    parameters:
+      #https://github.com/dotnet/corefx/blob/master/pkg/Microsoft.NETCore.Platforms/runtime.json
+      rid: linux-arm64
+      qemu: qemu-aarch64
+
+# ------- arm-linux-gnueabihf --------------------------------------------------
+- job: linux_arm
+  condition: succeeded()
+  pool:
+    name: Hosted Ubuntu 1604
+
+  container: gigi81/azurecross:arm-linux-gnueabihf
+
+  steps:
+  - template: arm-steps.yml
+    parameters:
+      #https://github.com/dotnet/corefx/blob/master/pkg/Microsoft.NETCore.Platforms/runtime.json
+      rid: linux-arm
+      qemu: 'qemu-arm -cpu cortex-a8'
+
+# ------- arm-linux-gnueabi --------------------------------------------------
+- job: linux_armel
+  condition: succeeded()
+  pool:
+    name: Hosted Ubuntu 1604
+
+  container: gigi81/azurecross:arm-linux-gnueabi
+
+  steps:
+  - template: arm-steps.yml
+    parameters:
+      #https://github.com/dotnet/corefx/blob/master/pkg/Microsoft.NETCore.Platforms/runtime.json
+      rid: linux-armel
+      qemu: 'qemu-arm'
+
 # ------- Package ---------------------------------------------------------
 - job: package
   dependsOn:

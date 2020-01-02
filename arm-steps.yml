@@ -1,0 +1,26 @@
+parameters:
+  rid: ''
+
+steps:
+  - checkout: self
+    clean: true
+    submodules: true
+
+  - task: Bash@3
+    displayName: 'Generate project'
+    inputs:
+      targetType: inline
+      script: cmake . -DBUILD_TESTING=ON -DUSE_SHARED_MBEDTLS_LIBRARY=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_LIBRARY_OUTPUT_DIRECTORY=$(Build.ArtifactStagingDirectory) -DCMAKE_TOOLCHAIN_FILE=$CMAKE_TOOLCHAIN_FILE
+      workingDirectory: .
+
+  - task: Bash@3
+    displayName: 'Build'
+    inputs:
+      targetType: inline
+      script: make
+  
+  #TODO: run tests on qemu
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      artifactName: ${{ parameters.rid }}

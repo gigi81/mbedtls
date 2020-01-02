@@ -10,7 +10,7 @@ steps:
     displayName: 'Generate project'
     inputs:
       targetType: inline
-      script: cmake . -DBUILD_TESTING=ON -DUSE_SHARED_MBEDTLS_LIBRARY=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_LIBRARY_OUTPUT_DIRECTORY=$(Build.ArtifactStagingDirectory) -DCMAKE_TOOLCHAIN_FILE=$CMAKE_TOOLCHAIN_FILE
+      script: cmake . -DENABLE_TESTING=ON -DUSE_SHARED_MBEDTLS_LIBRARY=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_LIBRARY_OUTPUT_DIRECTORY=$(Build.ArtifactStagingDirectory) -DCMAKE_TOOLCHAIN_FILE=$CMAKE_TOOLCHAIN_FILE
       workingDirectory: .
 
   - task: Bash@3

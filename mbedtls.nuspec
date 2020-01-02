@@ -23,9 +23,9 @@
         
         <!-- <file src="runtimes\win-arm\*.*" target="runtimes\win-arm\native" /> -->
 
-        <!-- <file src="runtimes\linux-arm64\*.*" target="runtimes\linux-arm64\native" /> -->
-        <!-- <file src="runtimes\linux-arm\*.*" target="runtimes\linux-arm\native" /> -->
-        <!-- <file src="runtimes\linux-armel\*.*" target="runtimes\linux-armel\native" /> -->
+        <file src="runtimes\linux-arm64\*.*" target="runtimes\linux-arm64\native" />
+        <file src="runtimes\linux-arm\*.*" target="runtimes\linux-arm\native" />
+        <file src="runtimes\linux-armel\*.*" target="runtimes\linux-armel\native" />
 
         <file src="LICENS*" target="" />
     </files>
